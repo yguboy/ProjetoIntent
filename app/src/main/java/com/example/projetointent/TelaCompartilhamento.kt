@@ -1,7 +1,12 @@
+import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -11,14 +16,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
-import java.lang.reflect.Modifier
 
 @Composable
 fun <NavController> TelaCompartilhamento(navController: NavController) {
     var intencao by rememberSaveable { mutableStateOf("") }
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -27,6 +32,7 @@ fun <NavController> TelaCompartilhamento(navController: NavController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Exemplo de dados, substitua com dados reais conforme necessário
         Text("Nome: Nome de Exemplo")
         Spacer(modifier = Modifier.height(8.dp))
         Text("Número de telefone: Número de Exemplo")
@@ -46,7 +52,8 @@ fun <NavController> TelaCompartilhamento(navController: NavController) {
                 nome = "Nome de Exemplo",
                 telefone = "Número de Exemplo",
                 biotipo = "Biotipo de Exemplo",
-                intencao = intencao
+                intencao = intencao,
+                context = context
             )
         }) {
             Text("Compartilhar")
@@ -54,13 +61,11 @@ fun <NavController> TelaCompartilhamento(navController: NavController) {
     }
 }
 
-@Composable
-fun compartilharDados(nome: String, telefone: String, biotipo: String, intencao: String) {
+fun compartilharDados(nome: String, telefone: String, biotipo: String, intencao: String, context: Context) {
     val shareIntent = Intent().apply {
         action = Intent.ACTION_SEND
         putExtra(Intent.EXTRA_TEXT, "Nome: $nome\nTelefone: $telefone\nBiotipo: $biotipo\nIntenção: $intencao")
         type = "text/plain"
     }
-    val context = LocalContext.current
     context.startActivity(Intent.createChooser(shareIntent, "Compartilhar via"))
 }
