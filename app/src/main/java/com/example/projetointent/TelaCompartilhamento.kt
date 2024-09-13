@@ -32,7 +32,6 @@ fun <NavController> TelaCompartilhamento(navController: NavController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Exemplo de dados, substitua com dados reais conforme necessário
         Text("Nome: Nome de Exemplo")
         Spacer(modifier = Modifier.height(8.dp))
         Text("Número de telefone: Número de Exemplo")

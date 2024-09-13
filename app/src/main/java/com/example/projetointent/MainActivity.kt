@@ -38,7 +38,8 @@ class MainActivity : ComponentActivity() {
         NavHost(navController = navController, startDestination = "menu") {
             composable("menu") { MenuPrincipal(navController) }
             composable("dados") { TelaDados(navController) }
-            composable("compartilhamento") { TelaCompartilhamento(navController) }
+            composable("compartilhamento") { TelaCompartilhamento(navController)
+            }
         }
     }
 
