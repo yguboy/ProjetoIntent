@@ -1,35 +1,26 @@
 package com.example.projetointent
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 
 @Composable
-fun TelaDados(navController: NavController) {
-    var nome by rememberSaveable { mutableStateOf("") }
-    var telefone by rememberSaveable { mutableStateOf("") }
-    var biotipo by rememberSaveable { mutableStateOf("") }
+fun TelaDados(
+    navController: NavHostController,
+    onSave: (String, String, String) -> Unit
+) {
+    var nome by remember { mutableStateOf("") }
+    var telefone by remember { mutableStateOf("") }
+    var descricao by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        verticalArrangement = Arrangement.Center
     ) {
         TextField(
             value = nome,
@@ -41,28 +32,25 @@ fun TelaDados(navController: NavController) {
         TextField(
             value = telefone,
             onValueChange = { telefone = it },
-            label = { Text("Número de telefone") },
-            modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
+            label = { Text("Número de Telefone") },
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
         TextField(
-            value = biotipo,
-            onValueChange = { biotipo = it },
-            label = { Text("Descrição do biotipo") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(150.dp),
-            keyboardOptions = KeyboardOptions.Default.copy(
-                capitalization = KeyboardCapitalization.Sentences
-            ),
-            maxLines = 5
+            value = descricao,
+            onValueChange = { descricao = it },
+            label = { Text("Descrição do Biotipo") },
+            modifier = Modifier.fillMaxWidth(),
+            maxLines = 3
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = {
-            navController.navigate("compartilhamento")
-        }) {
-            Text("Ir para Compartilhamento")
+        Button(
+            onClick = {
+                onSave(nome, telefone, descricao)
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Salvar")
         }
     }
 }

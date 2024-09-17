@@ -1,44 +1,36 @@
-import android.content.Context
+package com.example.projetointent
+
 import android.content.Intent
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 
 @Composable
-fun <NavController> TelaCompartilhamento(navController: NavController) {
-    var intencao by rememberSaveable { mutableStateOf("") }
+fun TelaCompartilhamento(
+    navController: NavHostController,
+    nome: String,
+    telefone: String,
+    descricao: String
+) {
     val context = LocalContext.current
+    var intencao by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        verticalArrangement = Arrangement.Center
     ) {
-        Text("Nome: Nome de Exemplo")
+        Text("Nome: $nome")
         Spacer(modifier = Modifier.height(8.dp))
-        Text("Número de telefone: Número de Exemplo")
+        Text("Telefone: $telefone")
         Spacer(modifier = Modifier.height(8.dp))
-        Text("Descrição do biotipo: Biotipo de Exemplo")
+        Text("Biotipo: $descricao")
         Spacer(modifier = Modifier.height(16.dp))
-
         TextField(
             value = intencao,
             onValueChange = { intencao = it },
@@ -46,25 +38,21 @@ fun <NavController> TelaCompartilhamento(navController: NavController) {
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = {
-            compartilharDados(
-                nome = "Nome de Exemplo",
-                telefone = "Número de Exemplo",
-                biotipo = "Biotipo de Exemplo",
-                intencao = intencao,
-                context = context
-            )
-        }) {
+        Button(
+            onClick = {
+                val intent = Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_SUBJECT, "Dados Pessoais")
+                    putExtra(
+                        Intent.EXTRA_TEXT,
+                        "Nome: $nome\nTelefone: $telefone\nBiotipo: $descricao\nIntenção: $intencao"
+                    )
+                }
+                context.startActivity(Intent.createChooser(intent, "Compartilhe via"))
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Text("Compartilhar")
         }
     }
-}
-
-fun compartilharDados(nome: String, telefone: String, biotipo: String, intencao: String, context: Context) {
-    val shareIntent = Intent().apply {
-        action = Intent.ACTION_SEND
-        putExtra(Intent.EXTRA_TEXT, "Nome: $nome\nTelefone: $telefone\nBiotipo: $biotipo\nIntenção: $intencao")
-        type = "text/plain"
-    }
-    context.startActivity(Intent.createChooser(shareIntent, "Compartilhar via"))
 }
