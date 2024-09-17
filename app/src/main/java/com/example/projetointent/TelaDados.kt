@@ -52,5 +52,14 @@ fun TelaDados(
         ) {
             Text("Salvar")
         }
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(
+            onClick = {
+                navController.popBackStack()
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Voltar")
+        }
     }
 }
