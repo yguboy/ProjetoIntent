@@ -6,6 +6,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
@@ -15,9 +16,9 @@ import androidx.navigation.NavHostController
 
 @Composable
 fun TelaDados(navController: NavHostController, viewModel: MainViewModel) {
-    var nome by remember { mutableStateOf(viewModel.pessoa?.nome ?: "") }
-    var numeroTelefone by remember { mutableStateOf(viewModel.pessoa?.numeroTelefone ?: "") }
-    var descricao by remember { mutableStateOf(viewModel.pessoa?.descricao ?: "") }
+    var nome by rememberSaveable { mutableStateOf(viewModel.pessoa?.nome ?: "") }
+    var numeroTelefone by rememberSaveable { mutableStateOf(viewModel.pessoa?.numeroTelefone ?: "") }
+    var descricao by rememberSaveable { mutableStateOf(viewModel.pessoa?.descricao ?: "") }
 
     Column(
         modifier = Modifier
@@ -61,8 +62,8 @@ fun TelaDados(navController: NavHostController, viewModel: MainViewModel) {
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = {
             val pessoa = Pessoa(nome, numeroTelefone, descricao)
-            viewModel.setPessoa(pessoa) // Atualiza a pessoa na ViewModel
-            navController.popBackStack() // Voltar para a tela anterior
+            viewModel.setPessoa(pessoa)
+            navController.popBackStack()
         }) {
             Text("Voltar")
         }

@@ -33,7 +33,7 @@ fun AppNavHost(navController: NavHostController, viewModel: MainViewModel) {
 }
 
 @Composable
-fun MenuPrincipal(navController: NavHostController ,viewModel : MainViewModel) {
+fun MenuPrincipal(navController: NavHostController, viewModel: MainViewModel) {
     val pessoa = viewModel.pessoa
 
     Column(
@@ -53,12 +53,14 @@ fun MenuPrincipal(navController: NavHostController ,viewModel : MainViewModel) {
         Button(onClick = { navController.navigate("dados") }) {
             Text("Dados")
         }
+
         Button(
             onClick = {
                 if (pessoa != null) {
                     navController.navigate("compartilha")
                 }
-            }
+            },
+            enabled = pessoa != null
         ) {
             Text("Compartilhamento")
         }
