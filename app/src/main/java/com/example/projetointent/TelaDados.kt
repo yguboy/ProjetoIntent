@@ -1,64 +1,69 @@
 package com.example.projetointent
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Button
+import androidx.compose.material.Text
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 
 @Composable
-fun TelaDados(
-    navController: NavHostController,
-    onSave: (String, String, String) -> Unit
-) {
-    var nome by remember { mutableStateOf("") }
-    var telefone by remember { mutableStateOf("") }
-    var descricao by remember { mutableStateOf("") }
+fun TelaDados(navController: NavHostController, viewModel: MainViewModel) {
+    var nome by remember { mutableStateOf(viewModel.pessoa?.nome ?: "") }
+    var numeroTelefone by remember { mutableStateOf(viewModel.pessoa?.numeroTelefone ?: "") }
+    var descricao by remember { mutableStateOf(viewModel.pessoa?.descricao ?: "") }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        TextField(
+        Text("Nome:")
+        OutlinedTextField(
             value = nome,
             onValueChange = { nome = it },
-            label = { Text("Nome") },
-            modifier = Modifier.fillMaxWidth()
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next
+            )
         )
+
         Spacer(modifier = Modifier.height(8.dp))
-        TextField(
-            value = telefone,
-            onValueChange = { telefone = it },
-            label = { Text("Número de Telefone") },
-            modifier = Modifier.fillMaxWidth()
+        Text("Número de telefone:")
+        OutlinedTextField(
+            value = numeroTelefone,
+            onValueChange = { numeroTelefone = it },
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Phone,
+                imeAction = ImeAction.Next
+            )
         )
+
         Spacer(modifier = Modifier.height(8.dp))
-        TextField(
+        Text("Descrição do biotipo:")
+        OutlinedTextField(
             value = descricao,
             onValueChange = { descricao = it },
-            label = { Text("Descrição do Biotipo") },
-            modifier = Modifier.fillMaxWidth(),
-            maxLines = 3
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done
+            )
         )
+
         Spacer(modifier = Modifier.height(16.dp))
-        Button(
-            onClick = {
-                onSave(nome, telefone, descricao)
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Salvar")
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(
-            onClick = {
-                navController.popBackStack()
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
+        Button(onClick = {
+            val pessoa = Pessoa(nome, numeroTelefone, descricao)
+            viewModel.setPessoa(pessoa) // Atualiza a pessoa na ViewModel
+            navController.popBackStack() // Voltar para a tela anterior
+        }) {
             Text("Voltar")
         }
     }

@@ -1,47 +1,31 @@
 package com.example.projetointent
 
+import AppNavHost
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.*
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
-import com.example.projetointent.TelaCompartilhamento
-import com.example.projetointent.TelaDados
-import com.example.projetointent.TelaMenu
+import com.example.projetointent.ui.theme.ProjetoIntentTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContent {
-            ProjetoIntentApp()
-        }
-    }
-}
+            ProjetoIntentTheme {
+                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
+                    val viewModel: MainViewModel = viewModel()
+                    val navController = rememberNavController()
 
-@Composable
-fun ProjetoIntentApp() {
-    val navController = rememberNavController()
-
-    var nome by remember { mutableStateOf("") }
-    var telefone by remember { mutableStateOf("") }
-    var descricao by remember { mutableStateOf("") }
-
-    NavHost(navController = navController, startDestination = "menu") {
-        composable("menu") {
-            TelaMenu(navController)
-        }
-        composable("dados") {
-            TelaDados(navController, onSave = { newNome, newTelefone, newDescricao ->
-                nome = newNome
-                telefone = newTelefone
-                descricao = newDescricao
-                navController.popBackStack()
-            })
-        }
-        composable("compartilhamento") {
-            TelaCompartilhamento(navController, nome, telefone, descricao)
+                    AppNavHost(navController, viewModel)
+                }
+            }
         }
     }
 }
