@@ -1,4 +1,4 @@
-package com.example.projetointent
+package com.example.projetointent.view
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -13,6 +13,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.projetointent.viewModel.MainViewModel
+import com.example.projetointent.model.Pessoa
 
 @Composable
 fun TelaDados(navController: NavHostController, viewModel: MainViewModel) {

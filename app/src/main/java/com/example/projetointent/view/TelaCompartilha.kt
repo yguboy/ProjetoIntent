@@ -1,4 +1,4 @@
-package com.example.projetointent
+package com.example.projetointent.view
 
 import android.content.Intent
 import android.widget.Toast
@@ -13,6 +13,7 @@ import androidx.navigation.NavHostController
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import com.example.projetointent.viewModel.MainViewModel
 
 @Composable
 fun TelaCompartilha(navController: NavHostController, viewModel: MainViewModel) {

@@ -1,4 +1,4 @@
-package com.example.projetointent
+package com.example.projetointent.model
 
 data class Pessoa(
     val nome: String,

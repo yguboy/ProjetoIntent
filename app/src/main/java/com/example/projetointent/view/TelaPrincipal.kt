@@ -1,3 +1,5 @@
+package com.example.projetointent.view
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,9 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.projetointent.MainViewModel
-import com.example.projetointent.TelaCompartilha
-import com.example.projetointent.TelaDados
+import com.example.projetointent.viewModel.MainViewModel
 
 @Composable
 fun AppNavHost(navController: NavHostController, viewModel: MainViewModel) {

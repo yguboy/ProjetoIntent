@@ -1,6 +1,6 @@
 package com.example.projetointent
 
-import AppNavHost
+import com.example.projetointent.view.AppNavHost
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.projetointent.ui.theme.ProjetoIntentTheme
+import com.example.projetointent.viewModel.MainViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
